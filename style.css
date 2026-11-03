@@ -2,7 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Update background-image path to relative root */
+background-image: url('images/231443.mp4'); /* or images/background.jpg */
 }
+
+
 html {
   scroll-behavior: smooth;
 }
