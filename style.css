@@ -3,8 +3,10 @@
   padding: 0;
   box-sizing: border-box;
   /* Update background-image path to relative root */
-background-image: url('images/231443.mp4'); /* or images/background.jpg */
+
 }
+
+
 
 
 html {
@@ -29,6 +31,7 @@ body, html {
   height: 100%;
   object-fit: cover;
   background: rgba(0, 0, 0, 0.9);
+  filter: brightness(0.7);
   z-index: -1;
 }
 
