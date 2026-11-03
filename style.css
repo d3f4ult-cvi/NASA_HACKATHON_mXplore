@@ -1,13 +1,9 @@
+/* Universal Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* Update background-image path to relative root */
-
 }
-
-
-
 
 html {
   scroll-behavior: smooth;
