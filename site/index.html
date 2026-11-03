@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mXplore</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="images/logo.png" type="image/x-image"/>
+<style>
+    :root{
+      --card-w: 260px;
+      --card-h: 340px;
+      --gap: 20px;
+      --bg: #58282a;
+      --card-bg: linear-gradient(135deg,#ff7200 0%, #58282a 100%);
+      --glass: rgba(255,255,255,0.08);
+      --text-color: #ffffff;
+      color-scheme: dark;
+    }
+    html,body{height:100%;}
+    #cards-section{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      box-sizing:border-box;
+    }
+
+    .page-title{
+      color:#ffffff;
+      text-align:center;
+      font-weight:600;
+      margin-bottom:18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(var(--card-w), 1fr));
+      gap:var(--gap);
+      width:min(1100px, 100%);
+    }
+
+    .flip-card{
+    width:var(--card-w);
+    height:var(--card-h);
+    perspective:1200px;
+    margin:0 auto;
+  }
+  .flip-card-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+    transition: transform 700ms cubic-bezier(.2,.9,.3,1);
+    border-radius:18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    cursor:pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flip-card.flipped .flip-card-inner{ transform: rotateY(180deg); }
+
+  .flip-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    box-sizing:border-box;
+    color:var(--text-color);
+  }
+  .flip-face.front{
+    background: var(--card-bg);
+  }
+  .flip-face.back{
+    background: #ff7200;
+    transform: rotateY(180deg);
+  }
+
+    .badge{
+      position:absolute;
+      top:16px;
+      left:16px;
+      background:var(--glass);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13px;
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,0.06);
+      color:#ffffff;
+    }
+
+    .title{
+      text-align:center;
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:0.2px;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .meta{font-size:13px; opacity:0.95; margin-top:10px}
+
+    .controls{
+      display:flex; gap:12px; margin-top:16px; justify-content:center;
+    }
+
+    .controls button{
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .controls button:first-child{
+      background:#58282a;
+      color:#fff;
+      border:none;
+    }
+
+    .controls button:last-child{
+      background:transparent;
+      color:#fff;
+      border:1px solid #fff;
+    }
+
+    .back .small{
+      margin-top:12px; opacity:0.95; font-size:13px;
+    }
+
+    .card:focus-visible .card-inner{ box-shadow: 0 0 0 4px rgba(255,114,0,0.4); }
+
+    @media (prefers-reduced-motion: reduce){
+      .card-inner{ transition: none; }
+    }
+
+    @media (max-width:420px){
+      :root{ --card-w: 90vw; --card-h: 320px }
+    }
+    .flip-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-w), 1fr));
+  gap:var(--gap);
+  width:min(1100px, 100%);
+  margin: 0 auto;
+  padding: 40px 0;
+  justify-items: center;
+}
+
+/* Flip Card styles */
+.flip-card{
+  width:var(--card-w);
+  height:var(--card-h);
+  perspective:1200px;
+}
+
+.flip-card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition: transform 700ms cubic-bezier(.2,.9,.3,1);
+  border-radius:18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  cursor:pointer;
+}
+
+.flip-card.flipped .flip-card-inner{ 
+  transform: rotateY(180deg); 
+}
+
+.flip-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  box-sizing:border-box;
+  color:var(--text-color);
+}
+
+.flip-face.front{
+  background: var(--card-bg); /* gradient preserved */
+}
+
+.flip-face.back{
+  background: #ff7200;
+  transform: rotateY(180deg);
+}
+  </style> 
+</head>
+<body>
+
+
+<video autoplay muted loop id="bg-video">
+  <source src="231443.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+
+<nav>
+  <div class="logo">mXplore</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#aboutlink">About</a></li>
+    <li><a href="#experiment">Experiments</a></li>
+    <li><a href="#search-section">Search</a></li>
+  </ul>
+</nav>
+
+
+<section id="home" class="hero">
+  <h1 id="hero-title">Explore The World Of Meteors</h1>
+  <p id="hero-text">
+    Explore a website that makes learning about meteors simple. 
+    Easily find details about their size, path, and distance from Earth, 
+    so you can stay curious and informed about these fascinating cosmic visitors.
+  </p>
+  <button id="cta-btn">Get Started</button>
+</section>
+
+
+
+<section id="about" class="about-container"><div id="aboutusbg">
+  <h1 id="aboutlink" class="split-text">
+    <span class="left">About</span>
+    <span class="right">Us</span>
+  </h1>
+  <p class="about-desc">
+    This is our first time participating in this challenge, and we are excited to give it our best effort.<br> We are eager to enhance our knowledge in both astronomy and coding through this program.<br> Although we have just begun our high school journey, we already have experience in developing websites,<br> creating mobile apps, working with data, coding in Java, and more.
+  </p>
+  </div>
+</section>
+
+
+
+<section id="team" class="team">
+  <h2 class="team-title fade-in">Meet Our Team</h2>
+  <div class="team-container">
+
+    <div class="team-member fade-in">
+      <img src="images/Dilbar.JPG" alt="Member 1">
+      <div class="member-info">
+        <h3>Dilbar Xaydarova</h3>
+        <p>Project Leader, Developer</p>
+      </div>
+      <a href="https://t.me/dilbar_1811" target="_blank" class="telegram-link">
+        <img style="margin-top: -23px;margin-left: 1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+
+    <div class="team-member fade-in">
+      <img src="images/Ibrohim.JPG" alt="Member 2">
+      <div class="member-info">
+        <h3>Ibrohim Shavkatbekov</h3>
+        <p>UI/UX Designer, Innovation Manager</p>
+      </div>
+      <a href="https://t.me/Ibrohim_sh" target="_blank" class="telegram-link">
+        <img style="margin-top: -23px;margin-left:-1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+
+    <div class="team-member fade-in">
+      <img src="images/Bobur.JPG" alt="Member 3">
+      <div class="member-info">
+        <h3>Bobur Xoshimjanov</h3>
+        <p>Full Stack Developer</p>
+      </div>
+      <a href="https://t.me/el_mmago" target="_blank" class="telegram-link">
+        <img style="margin-top: -23px;margin-left: -1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+
+    <div class="team-member fade-in">
+      <img src="images/Iroda.JPG" alt="Member 4">
+      <div class="member-info">
+        <h3>Iroda Raximjanova</h3>
+        <p>Presentator/Designer</p>
+      </div>
+      <a href="https://t.me/rhmjnva_i" target="_blank" class="telegram-link">
+        <img style="margin-top: -23px;margin-left: 1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+    <div class="team-member fade-in">
+      <img src="images/Dovud.jpg" alt="Member 4">
+      <div class="member-info">
+        <h3>Dovud Muhammadjonov</h3>
+        <p>Presentator, Video editor</p>
+      </div>
+      <a href="https://t.me/muhammadjanov" target="_blank" class="telegram-link">
+        <img style="margin-top: -10px;margin-left: -1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+    <div class="team-member fade-in">
+      <img src="images/Husan.jpg" alt="Member 4">
+      <div class="member-info">
+        <h3>Husan Abdukomilov</h3>
+        <p>Video Producer</p>
+      </div>
+      <a href="https://t.me/husan_abd" target="_blank" class="telegram-link">
+        <img style="margin-top: -23px;margin-left: 1px;" src="images/telegram.png" alt="Telegram">
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+<section id="experiment" class="experiment">
+  <h1 class="headline">Experiment Your Consequences</h1>
+
+  <div class="main-container">
+
+    <div class="earth-container">
+      <img src="images/earth.png" alt="Earth">
+    </div>
+
+    <div class="container">
+
+      <div class="card">
+        <h2>Impact Body Settings</h2>
+        <label>Diameter</label>
+        <div class="input-row">
+          <input type="number" id="diameter" value="0">
+          <select id="diameterUnit">
+            <option>m</option>
+            <option>km</option>
+          </select>
+        </div>
+
+        <br><br>
+
+        <label>Density (kg/m³)</label>
+        <input type="number" id="densityInput" value="0">
+      </div>
+
+      <div class="card">
+        <h2>Impact Factors</h2>
+        <label>Angle: <span id="angleValue">0°</span></label>
+        <input type="range" id="angle" min="0" max="90" value="0">
+        <br><br>
+
+        <label>Velocity: <span id="velocityValue">0 km/s</span></label>
+        <input type="range" id="velocity" min="0" max="72" value="0">
+      </div>
+
+      <div class="card">
+        <h2>Landing Surface</h2>
+        <label>Target Type</label>
+        <select id="targetType">
+          <option>-- Select --</option>
+          <option>Sedimentary Rock</option>
+          <option>Igneous Rock</option>
+          <option>Water</option>
+        </select>
+        <br><br>
+        <label>Distance (km)</label>
+        <input type="number" id="distance" value="0">
+      </div>
+
+    </div>
+
+    <!-- ✅ Submit button -->
+    <div class="submit-container">
+      <button id="submitBtn">🚀 Submit Experiment</button>
+    </div>
+
+    <!-- ✅ Material identification result -->
+    <div id="materialResult"></div>
+
+  </div>
+</section>
+
+
+<section id="search-section">
+  <h1 class="page-title">Search Near-Earth Objects</h1>
+
+  <div class="search-form">
+    <div class="search-row">
+      <label for="minDiameter">Min Diameter (m)</label>
+      <input type="number" id="minDiameter" placeholder="e.g. 30">
+    </div>
+    <div class="search-row">
+      <label for="maxDiameter">Max Diameter (m)</label>
+      <input type="number" id="maxDiameter" placeholder="e.g. 80">
+    </div>
+    <div class="search-row">
+      <label>Potentially Hazardous Only</label>
+        <input type="checkbox" id="hazardous">
+    </div>
+    <div class="search-row">
+      <label for="searchText">Search by Name</label>
+      <input type="text" id="searchText" placeholder="Asteroid name">
+    </div>
+    <button id="searchBtn">Search</button>
+  </div>
+</section>
+
+<section id="results" class="flip-grid">
+  <!-- Results will appear here -->
+</section>
+
+
+
+  <script>
+    document.querySelectorAll('.flip-card').forEach(card => {
+  const toggle = () => {
+    const flipped = card.classList.toggle('flipped');
+    card.setAttribute('aria-pressed', flipped);
+  };
+
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('button')) return; // don’t flip when clicking buttons
+    toggle();
+  });
+
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle();
+    }
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.flip-card.flipped').forEach(c => {
+      c.classList.remove('flipped');
+      c.setAttribute('aria-pressed', false);
+    });
+  }
+});
+  </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+  <p>Project completed using materials from NASA.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
