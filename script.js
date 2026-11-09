@@ -196,15 +196,15 @@ function updateBoxes() {
   let density = parseFloat(densityInput.value) || 0;
   let velocity = parseFloat(velocityInput.value) || 0;
 
-  box1.style.width = (50 + diameter) + "px";  
-  box2.style.width = (50 + density / 10) + "px";  
-  box3.style.width = (50 + velocity) + "px";  
+  if (box1) box1.style.width = (50 + diameter) + "px";  
+  if (box2) box2.style.width = (50 + density / 10) + "px";  
+  if (box3) box3.style.width = (50 + velocity) + "px";  
 }
 
 
-diameterInput.addEventListener('input', updateBoxes);
-densityInput.addEventListener('input', updateBoxes);
-velocityInput.addEventListener('input', updateBoxes);
+if (diameterInput) diameterInput.addEventListener('input', updateBoxes);
+if (densityInput) densityInput.addEventListener('input', updateBoxes);
+if (velocityInput) velocityInput.addEventListener('input', updateBoxes);
 
 
 
@@ -310,47 +310,32 @@ document.getElementById("searchBtn").addEventListener("click", async () => {
             <div class="flip-face back">
               <div>
                 <div style="font-weight:700; margin-bottom:6px">${neo.name}</div>
-                <div class="small" style="font-size: 1rem;">Hazardous: ${hazardous}<br>
-                Velocity: ${parseFloat(velocity).toFixed(2)} km/s<br>
-                Approach Date: ${neo.close_approach_data[0]?.close_approach_date}
-                </div>
+                <div class="meta">Hazardous: ${hazardous}</div>
+                <div class="meta">Velocity: ${velocity ? parseFloat(velocity).toFixed(2) + " km/s" : "N/A"}</div>
               </div>
             </div>
           </div>
         `;
         resultsContainer.appendChild(card);
-
-        // trigger fade-in
-        setTimeout(() => card.classList.add("show"), i * 100);
       });
 
-      // Re-bind flip interactions
-      bindFlipCards();
+      // Re-enable flip behavior on dynamically generated cards
+      document.querySelectorAll('#results .flip-card').forEach(card => {
+        const toggle = () => {
+          const flipped = card.classList.toggle('flipped');
+          card.setAttribute('aria-pressed', flipped);
+        };
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
     }
   } catch (error) {
-    resultsContainer.innerHTML = `<p style="color:#fff;">Error fetching data.</p>`;
-    console.error(error);
+    console.error("NASA API fetch failed:", error);
+    resultsContainer.innerHTML = `<p style="color:#ff7200;">Failed to fetch NEO data. Try again later.</p>`;
   }
 });
-
-// Helper: Flip interactions
-function bindFlipCards(){
-  document.querySelectorAll('.flip-card').forEach(card => {
-    const toggle = () => {
-      const flipped = card.classList.toggle('flipped');
-      card.setAttribute('aria-pressed', flipped);
-    };
-
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('button')) return;
-      toggle();
-    });
-
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggle();
-      }
-    });
-  });
-}
