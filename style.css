@@ -1,5 +1,5 @@
 /* Universal Reset */
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,8 +17,9 @@ body, html {
   font-family: 'Poppins', sans-serif;
   color: #fff;
   overflow-x: hidden;
-  background: transparent; /* Ensure body is transparent so video shows through */
+  background: transparent; 
 }
+
 .bg-video {
     position: fixed;
     top: 0;
@@ -28,7 +29,6 @@ body, html {
     object-fit: cover;
     z-index: -1;
 }
-
 
 nav {
   position: fixed;
@@ -47,7 +47,6 @@ nav .logo {
   font-size: 1.5rem;
   font-weight: bold;
   letter-spacing: 2px;
-
 }
 
 nav ul {
@@ -66,7 +65,6 @@ nav ul li a {
 nav ul li a:hover {
   color: #ff7200;
 }
-
 
 .hero {
   height: 100vh;
@@ -117,7 +115,6 @@ nav ul li a:hover {
   transform: scale(1.05);
 }
 
-
 footer {
   position: relative;
   bottom: 0;
@@ -128,14 +125,6 @@ footer {
   backdrop-filter: blur(4px);
   font-size: 0.9rem;
 }
-
-footer .nasa-logo {
-  margin-top: 0.5rem;
-  height: 40px;
-}
-
-
-
 
 #about{
   padding-top: 50px;
@@ -152,7 +141,6 @@ footer .nasa-logo {
   margin-top: -230px;
 }
 
-
 .split-text {
   font-size: 4rem;
   display: flex;
@@ -167,13 +155,11 @@ footer .nasa-logo {
   border: 5px double #ff7200; 
 }
 
-
 .split-text .left,
 .split-text .right,
 .about-desc {
   opacity: 0;
 }
-
 
 .split-text.animate .left {
   animation: slideLeft 1.5s forwards;
@@ -193,7 +179,6 @@ footer .nasa-logo {
   animation-delay: 1.8s;
 }
 
-/* Animations */
 @keyframes slideLeft {
   from { transform: translateX(-100%); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
@@ -214,12 +199,6 @@ footer .nasa-logo {
   padding-top: 30px;
 }
 
-
-
-
-
-
-
 .team{
   padding: 80px 20px 120px;
   text-align: center;
@@ -232,9 +211,7 @@ footer .nasa-logo {
   margin: 0 0 40px;
   opacity: 0;               
   transform: translateY(20px);
-
 }
-
 
 .team-container{
   display: flex;
@@ -255,8 +232,8 @@ footer .nasa-logo {
   padding-bottom:16px;
   opacity: 0;          
   transform: translateY(30px);
+  position: relative;
 }
-
 
 .team-member img{
   width: 100%;
@@ -266,7 +243,6 @@ footer .nasa-logo {
   cursor: pointer;
   transform: scale(1);
   transition: transform 0.5s ease-in-out; 
-
 }
 .team-member:hover img {
   transform: scale(1.2);
@@ -305,15 +281,12 @@ footer .nasa-logo {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-
 .team-title.show{
   animation: fadeUp 0.8s ease forwards;
-
 }
 
 .team-member.show{
   animation: fadeUp 0.7s ease forwards;
-
 }
 
 @media (max-width:700px){
@@ -325,6 +298,7 @@ footer .nasa-logo {
   .team-member{ width: 100%; }
   .team-title{ font-size: 2.3rem; }
 }
+
 .telegram-link {
   position: absolute;
   bottom: 60px;
@@ -344,16 +318,6 @@ footer .nasa-logo {
 .telegram-link img:hover {
   transform: scale(1.2);
 }
-
-
-
-
-
-
-
-
-
-
 
 .headline {
   font-size: 2.5rem;
@@ -420,6 +384,7 @@ input, select {
   border: none;
   border-radius: 5px;
 }
+
 .submit-container {
   text-align: center;
   margin-top: 40px;
@@ -461,45 +426,6 @@ input, select {
   box-shadow: 0 0 20px rgba(255, 114, 0, 0.5);
 }
 
-
-
-
-
-
-
-.result-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.result-box {
-  background: rgba(20, 20, 20, 0.9);
-  border: 2px solid #444;
-  border-radius: 10px;
-  padding: 50px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 255, 0.4);
-  transition: all 0.5s ease;
-  width: 500px; 
-  height: 600px;
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap:40px;
-}
-
-.result-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0, 0, 255, 0.6);
-}
-
-
-
-/* === Search Section Styling === */
 #search-section {
   background: radial-gradient(circle at top, #1a1a1a 0%, #000 100%);
   padding: 60px 40px;
@@ -519,7 +445,6 @@ input, select {
   margin-bottom: 25px;
 }
 
-/* === Search Form Layout === */
 .search-form {
   display: flex;
   flex-wrap: wrap;
@@ -558,6 +483,7 @@ input, select {
   box-shadow: 0 0 8px #ff7200;
   background: rgba(255, 255, 255, 0.1);
 }
+
 #hazardous{
   margin-top: 10px;
   width: 20px;
@@ -566,7 +492,6 @@ input, select {
   outline: 1px solid #ff7200;
 }
 
-/* === Search Button === */
 #searchBtn {
   background: #ff7200;
   border: none;
@@ -584,48 +509,7 @@ input, select {
   transform: scale(1.07);
   box-shadow: 0 0 12px #ff7200;
 }
-/* === Flip Card Animations === */
-.flip-card {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 114, 0, 0.3);
-  border-radius: 12px;
-}
 
-.flip-card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.flip-card-inner {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.flip-card.flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-face {
-  backface-visibility: hidden;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.flip-face.front {
-  background: rgba(255, 114, 0, 0.15);
-  color: #fff;
-}
-
-.flip-face.back {
-  background: rgba(255, 255, 255, 0.1);
-  transform: rotateY(180deg);
-  color: #fff;
-}
-
-/* === Small Text & Badges === */
 .badge {
   display: inline-block;
   background: #ff7200;
